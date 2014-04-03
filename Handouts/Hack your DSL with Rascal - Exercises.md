@@ -71,6 +71,7 @@ Add support for date valued questions:
 * add new **QType** constructor for date types (*AST.rsc*)
 * add new case to **type2widget** in *Compile.rsc* to generate DateValueWidgets (see *resources/js/framework/value-widgets.js*)
 
+---
 ### Part II: Advanced examples
 
 For this part of the session, we need to understand three important Rascal features: **visitors**, **locations** and **relations**.A visitor in Rascal is ...#### 3. Transformation: Desugaring *unless*
@@ -103,6 +104,89 @@ The desugar function is called before compilation so the compiler (*Compile.rsc*
 </ol>
 </td></tr>
 </table>
----
 
-#### 1. Build a name graph
+#### 4. Analysis: Extract control dependencies
+
+<table border="1" width="100%" bordercolor="lightgrey">
+<tr><td>
+<strong>Warm up</strong><br><br>
+Use visit to:
+<ol type="I">
+<li>use deep matching (using /) to find a variables in a form.</li>
+<li>use deep match to find all question with label value (within the quotes) equal to name; make sure there such labels in your test code.</li>
+</ol>
+</td></tr>
+</table>
+
+ * use the Node and Deps data types and nodeFor function shown below
+ * visit the form, and when encountering ifThen/ifThenElse
+ * record an edge (tuple) between each Id used in the condition and each Id defined in the body/bodies.
+ *  use deep match (/p) to find Ids in expressions
+
+For inspiration, a function to extract data dependencies (`dataDeps(Form f)`) is shown.
+
+<table border="1" width="100%" bordercolor="lightgrey">
+<tr><td>
+<strong>Tips</strong>
+<ul>
+<li>first define a helper function set[Id] definedIn(Question q) that returns the defined names at arbitrary depth in a question (q).</li>
+</td></tr>
+</table>
+
+#### 5. Analysis: Cycle detection
+ 
+ * detect cycles in a form using dataDeps and controlDeps
+ * first lift a Deps relation to rel[str, str]
+ * use transitive reflexive closure R* 
+
+<table border="1" width="100%" bordercolor="lightgrey">
+<tr><td>
+<strong>Optional Exercises</strong>
+<ol type="a">
+<li>compute the Nodes involved in a cycle (if any).</li>
+<li>produce a set[Message] for such nodes and hook it up to the type checker (Check.rsc)</li>
+</ol>
+</td></tr>
+</table>
+
+#### 6. Implement a rename refactoring
+
+##### 6.a. Analysis: Compute all locations referencing/referenced by a name location
+
+<table border="1" width="100%" bordercolor="lightgrey">
+<tr><td>
+<strong>Warm up</strong><br><br>
+Use visit to:
+<ol type="I">
+<li>call <code>resolve(loadExample("tax.tql"))</code>.</li>
+<li>click on the locations to see where they point.</li>
+<li>count all questions (question/computed).</li>
+</ol>
+</td></tr>
+</table>
+
+This exercise amounts to computing the equivalence relation of the use-def
+relation `Ref.use` which is declared as `rel[loc use, loc def]`.
+(See http://en.wikipedia.org/wiki/Equivalence_relation)
+
+ * get the use relation from Refs, returned from resolve (Resolve.rsc)
+ * use a comprehension to compute the symmetric closure of a relation (symmetric closure means <x, y> in the relation if also <y, x>)
+ * use R* to compute the reflexive, transitive closure of a relation
+ * use the "image" R[x] to compute all locs equivalent to `name`.
+
+##### 6.b. Transformation: Substitute all names in the input source
+
+* construct a renaming map map[loc, str] based on the result of 6a
+* use the function substitute(src, map[loc, str]) from String
+* observe the effect of rename by selecting an identifier in a TQL editor, and richt-click, select Rename... in the context menu.
+
+<table border="1" width="100%" bordercolor="lightgrey">
+<tr><td>
+<strong>Optional Exercises</strong>
+<ol type="a">
+<li>implement the rename refactoring, but now on ASTs. Use format (Format to see the result of your refactoring.).</li>
+<li>check as precondition that `newName` isn't already used. Retrieve the name at a location by  subscripting on src: src[l.offset..l.offset+l.length].</li>
+</ol>
+</td></tr>
+</table>
+
