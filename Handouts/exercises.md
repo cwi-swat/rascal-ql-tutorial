@@ -9,8 +9,7 @@
 </tr>
 </table>
 
-# Hacking your DSL with Rascal
-## Exercises
+## Hacking your DSL with Rascal: Exercises
 ---
 ### Part I: First steps
 
@@ -27,6 +26,7 @@ Write a program that prints the numbers from 1 to 100. But for multiples of thre
 <ul>
 <li>[1..101] gives the list [1,2,3,...,100]</li>
 <li>use <code>println</code> to print.</li>
+</ul>
 </td></tr>
 </table>
 
@@ -43,27 +43,28 @@ Add an unless statement which is to be used similar to `ifThen` statements:
  
 Check in the IDE that the type checkers indeed signals errors in unless conditions and bodies, and that its conditions appear in the outliner.  
 
-<table border="1" width="100%" bordercolor="lightgrey">
+<table border="1" width="100%" bordercolor="lightgrey" >
 <tr><td>
 <strong>Tips</strong>
 <ul>
 <li>implement <code>unless</code> analogous to <code>ifThen</code> in all cases</li>
+</ul>
 </td></tr>
 </table>
-
+<span></span>
 <table border="1" width="100%" bordercolor="lightgrey">
 <tr><td>
 <strong>Optional Exercises</strong>
 <ol type="a">
 <li>change the typechecker so that a warning is issued in the case of <code>ifThen(not(_), ...)</code>.</li>
-<li>fix the outliner (<i>Outline.rsc</i>) so that unless conditions appears in the outline.</li>
-<li>add conditional expression <code>x ? y : z</code> (affects: <i>QL.rsc, AST.rsc, CheckExpr.rsc, TypeOf.rsc, Expr2JS.rsc</i>)</li>
+<li>fix the outliner (<i>Outline.rsc</i>) so that <code>unless</code> conditions appears in the outline.</li>
+<li>fix the formatter to pretty print <code>unless</code>.</li>
 </ol>
 </td></tr>
 </table>
 
- 
-#### 2. Evolution: Adding date valued questions
+
+#### 2. Evolution: Date valued questions
 
 Add support for date valued questions:
 
@@ -71,15 +72,22 @@ Add support for date valued questions:
 * add new **QType** constructor for date types (*AST.rsc*)
 * add new case to **type2widget** in *Compile.rsc* to generate DateValueWidgets (see *resources/js/framework/value-widgets.js*)
 
----
-### Part II: Advanced examples
+#### 3. Evolution: Conditional expression
 
-For this part of the session, we need to understand three important Rascal features: **visitors**, **locations** and **relations**.A visitor in Rascal is ...#### 3. Transformation: Desugaring *unless*
+Add conditional expression <code>x ? y : z</code> 
+
+ *  add production to Expr (QL.rsc)
+ 	* 	Make sure it's low in the priority hierarchy i.e. x && y ? a : b  is equal to (x && y) ? a : b.
+ *  add new `Expr` constructor in *AST.rsc*
+ *  add new case to `typeOf` in *TypeOf.rsc*
+ *  add new case to `tc` in *CheckExpr.rsc*
+ *  add new case to `expr2js` in *Expr2JS.rsc*
+
+#### 4. Transformation: Explicit desugaring of *unless* to *ifThen*
 
 <table border="1" width="100%" bordercolor="lightgrey">
 <tr><td>
-<strong>Warm up</strong><br><br>
-Use visit to:
+<strong>(Warm up) </strong> Use visit to:
 <ol type="I">
 <li>print out all labels in a form</li>
 <li>count all questions (question/computed)</li>
@@ -95,6 +103,18 @@ Desugar:
 
 The desugar function is called before compilation so the compiler (*Compile.rsc*) does not have to be changed to support `unless`, even if no `normalize()` was used.
 
+<table border="1" width="100%" bordercolor="lightgrey" >
+<tr><td>
+<strong>Tips</strong><br/>
+See examples of <code>visit</code> at:
+<ul>
+<li><i>Resolve.rsc</i></li>
+<li><i>Outline.rsc</i></li>
+</ul>
+</td></tr>
+</table>
+
+<span></span>
 
 <table border="1" width="100%" bordercolor="lightgrey">
 <tr><td>
@@ -105,23 +125,29 @@ The desugar function is called before compilation so the compiler (*Compile.rsc*
 </td></tr>
 </table>
 
-#### 4. Analysis: Extract control dependencies
+---
+### Part II: Advanced examples
+
+<!--
+For this part of the session, we need to understand three important Rascal features: **visitors**, **locations** and **relations**.A visitor in Rascal is ...
+-->
+
+#### 5. Analysis: Extract control dependencies
 
 <table border="1" width="100%" bordercolor="lightgrey">
 <tr><td>
-<strong>Warm up</strong><br><br>
-Use visit to:
+<strong>Warm up</strong><br>
 <ol type="I">
-<li>use deep matching (using /) to find a variables in a form.</li>
-<li>use deep match to find all question with label value (within the quotes) equal to name; make sure there such labels in your test code.</li>
+<li>use deep matching (using <code>/</code>) to find a variables in a form.</li>
+<li>use deep match to find all question with label value (within the quotes) equal to name; make sure there are such labels in your test code.</li>
 </ol>
 </td></tr>
 </table>
 
  * use the Node and Deps data types and nodeFor function shown below
- * visit the form, and when encountering ifThen/ifThenElse
- * record an edge (tuple) between each Id used in the condition and each Id defined in the body/bodies.
- *  use deep match (/p) to find Ids in expressions
+ * visit the form, and when encountering `ifThen`/`ifThenElse`
+ * record an edge (tuple) between each `Id` used in the condition and each `Id` defined in the body/bodies.
+ *  use deep match (`/p`) to find `Id`s in expressions
 
 For inspiration, a function to extract data dependencies (`dataDeps(Form f)`) is shown.
 
@@ -129,29 +155,34 @@ For inspiration, a function to extract data dependencies (`dataDeps(Form f)`) is
 <tr><td>
 <strong>Tips</strong>
 <ul>
-<li>first define a helper function set[Id] definedIn(Question q) that returns the defined names at arbitrary depth in a question (q).</li>
+<li>Examples of deep match:
+<ul>
+<li><code>freeVars</code> in <i>Compile.rsc</i></li>
+<li><code>typeEnv</code> in <i>Check.rsc</i></li>
+</ul>
+<li>first define a helper function <code>set[Id] definedIn(Question q)</code> that returns the defined names at arbitrary depth in a question (q).</li>
 </td></tr>
 </table>
 
-#### 5. Analysis: Cycle detection
+#### 6. Analysis: Cycle detection
  
- * detect cycles in a form using dataDeps and controlDeps
- * first lift a Deps relation to rel[str, str]
- * use transitive reflexive closure R* 
+ * detect cycles in a form using `dataDeps` and `controlDeps`
+ * first lift a `Deps` relation to `rel[str, str]`
+ * use transitive reflexive closure `R*` 
 
 <table border="1" width="100%" bordercolor="lightgrey">
 <tr><td>
 <strong>Optional Exercises</strong>
 <ol type="a">
-<li>compute the Nodes involved in a cycle (if any).</li>
-<li>produce a set[Message] for such nodes and hook it up to the type checker (Check.rsc)</li>
+<li>compute the <code>Nodes</code> involved in a cycle (if any).</li>
+<li>produce a <code>set[Message]</code> for such nodes and hook it up to the type checker (<i>Check.rsc</i>)</li>
 </ol>
 </td></tr>
 </table>
 
-#### 6. Implement a rename refactoring
+#### 7. Implement a rename refactoring
 
-##### 6.a. Analysis: Compute all locations referencing/referenced by a name location
+##### 7.a. Analysis: Compute all locations referencing/referenced by a name location
 
 <table border="1" width="100%" bordercolor="lightgrey">
 <tr><td>
@@ -160,32 +191,31 @@ Use visit to:
 <ol type="I">
 <li>call <code>resolve(loadExample("tax.tql"))</code>.</li>
 <li>click on the locations to see where they point.</li>
-<li>count all questions (question/computed).</li>
-</ol>
+<li>count the number of uses (references) and defs (declarations) (use <code>size</code> from the standard module <code>Set</code>)</ol>
 </td></tr>
 </table>
 
 This exercise amounts to computing the equivalence relation of the use-def
 relation `Ref.use` which is declared as `rel[loc use, loc def]`.
-(See http://en.wikipedia.org/wiki/Equivalence_relation)
+(See <http://en.wikipedia.org/wiki/Equivalence_relation>)
 
- * get the use relation from Refs, returned from resolve (Resolve.rsc)
- * use a comprehension to compute the symmetric closure of a relation (symmetric closure means <x, y> in the relation if also <y, x>)
- * use R* to compute the reflexive, transitive closure of a relation
- * use the "image" R[x] to compute all locs equivalent to `name`.
+ * obtain the names relation by calling resolve on an AST (`Resolve.rsc`)
+ * use a comprehension to compute the symmetric closure of a relation (symmetric closure means `<x, y>` in the relation if also `<y, x>`)
+ * use `R*` to compute the reflexive, transitive closure of a relation (See <http://en.wikipedia.org/wiki/Reflexive_closure> and <http://en.wikipedia.org/wiki/Transitive_closure>)
+ * use the "image" `R[x]` to compute all locs equivalent to *name*.
 
-##### 6.b. Transformation: Substitute all names in the input source
+##### 7.b. Transformation: Substitute all names in the input source
 
-* construct a renaming map map[loc, str] based on the result of 6a
-* use the function substitute(src, map[loc, str]) from String
+* construct a renaming map `map[loc, str]` based on the result of 7a
+* use the function `substitute(src, map[loc, str])` from `String`
 * observe the effect of rename by selecting an identifier in a TQL editor, and richt-click, select Rename... in the context menu.
 
 <table border="1" width="100%" bordercolor="lightgrey">
 <tr><td>
 <strong>Optional Exercises</strong>
 <ol type="a">
-<li>implement the rename refactoring, but now on ASTs. Use format (Format to see the result of your refactoring.).</li>
-<li>check as precondition that `newName` isn't already used. Retrieve the name at a location by  subscripting on src: src[l.offset..l.offset+l.length].</li>
+<li>implement the rename refactoring, but now on ASTs. Use <code>format</code>) (Format to see the result of your refactoring.).</li>
+<li>check as precondition that <i>newName</i> isn't already used. Retrieve the name at a location by  subscripting on src: <code>src[l.offset..l.offset+l.length]</code>.</li>
 </ol>
 </td></tr>
 </table>
