@@ -20,9 +20,9 @@ Before starting coding, make sure you have opened a Rascal console associated wi
 
 * `import exercises::ImportThis;`
 * `import exercises::Snippets;`
-* past statements from `exercises/Snippets.rsc` and see what happens.
+* past statements from *exercises/Snippets.rsc* and see what happens.
 
-The exercises can be complete by directly editing `exercises/Part1.rsc` and `exercises/Part2.rsc`. 
+The exercises can be complete by directly editing *exercises/Part1.rsc* and *exercises/Part2.rsc*. 
 
 #### 0. FizzBuzz
 
@@ -69,7 +69,7 @@ Check in the IDE that the type checker indeed signals errors in unless condition
 <ol type="a">
 <li>change the typechecker so that a warning is issued in the case of <code>ifThen(not(_), ...)</code>.</li>
 <li>fix the outliner (<i>Outline.rsc</i>) so that <code>unless</code> conditions appears in the outline.</li>
-<li>fix the formatter to pretty print <code>unless</code>.</li>
+<li>fix the formatter (<i>Format.rsc</i>)to pretty print <code>unless</code>.</li>
 </ol>
 </td></tr>
 </table>
@@ -87,8 +87,8 @@ Add support for date valued questions:
 
 Add conditional expression <code>x ? y : z</code> 
 
- *  add production to Expr (QL.rsc)
- 	* 	Make sure it's low in the priority hierarchy i.e. x && y ? a : b  is equal to (x && y) ? a : b.
+ *  add production to Expr (*QL.rsc*)
+ 	* 	Make sure it's low in the priority hierarchy i.e. `x && y ? a : b`  should be parsed as `(x && y) ? a : b`.
  *  add new `Expr` constructor in *AST.rsc*
  *  add new case to `typeOf` in *TypeOf.rsc*
  *  add new case to `tc` in *CheckExpr.rsc*
@@ -117,12 +117,10 @@ Explicit desugaring of `unless`:
 The desugar function is called before compilation so the compiler (*Compile.rsc*) does not have to be changed to support `unless`, even if no `normalize()` was used.
 
 <table border="1" width="100%" bordercolor="lightgrey" >
-<tr><td>
-<strong>Tips</strong><br/>
-See examples of <code>visit</code> at:
+<tr><td><strong>Tip</strong><br/>
 <ul>
-<li><i>Resolve.rsc</i></li>
-<li><i>Outline.rsc</i></li>
+<li>See examples of <code>visit</code> in <i>Resolve.rsc</i> and <i>Outline.rsc</i>
+</li>
 </ul>
 </td></tr>
 </table>
@@ -165,11 +163,8 @@ A computed question is dependent on the questions it refers to in its expression
 <tr><td>
 <strong>Tips</strong>
 <ul>
-<li>examples of deep match:
-<ul>
-<li><code>freeVars</code> in <i>Compile.rsc</i></li>
-<li><code>typeEnv</code> in <i>Check.rsc</i></li>
-</ul>
+<li>check out examples of deep match in <i>Compile.rsc</i>
+and <i>Check.rsc</i></li>
 </li>
 <li>
  have a look at <code>controlDeps</code>, defined in (<em>Dependencies.rsc</em>) for inspiration
