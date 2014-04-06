@@ -56,7 +56,7 @@ Check in the IDE that the type checker indeed signals errors in unless condition
 
 <table border="1" width="100%" bordercolor="lightgrey" >
 <tr><td>
-<strong>Tips</strong>
+<strong>Tip</strong>
 <ul>
 <li>implement <code>unless</code> analogous to <code>ifThen</code> in all cases</li>
 </ul>
