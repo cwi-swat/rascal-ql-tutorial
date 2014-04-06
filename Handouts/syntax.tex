@@ -1,0 +1,143 @@
+\documentclass[a4paper]{article}
+%\usepackage[paperwidth=29.7cm,paperheight=21cm,margin=1cm]{geometry}
+\usepackage[paperheight=29.7cm,paperwidth=21cm,margin=1cm]{geometry}
+\usepackage{times}
+\usepackage{hyperref,url}
+\usepackage[T1]{fontenc}
+\usepackage[scaled=0.8]{beramono}
+\usepackage{rascal}
+\usepackage{multicol}
+\usepackage{epsfig,graphics}
+\pagestyle{empty}
+\setlength{\columnseprule}{.4pt}
+\def\mysect#1{\vspace*{-20pt}\section*{\textsf{#1}}\vspace*{-10pt}}
+\begin{document}\sffamily
+%\begin{multicols}{2}
+\noindent{\LARGE\textsf{\textbf{Syntax overview TutorialQL}}}%\\[0pt]
+\medskip
+
+\noindent\url{https://github.com/cwi-swat/rascal-ql-tutorial-prototype}\\[0pt]
+\noindent\url{http://www.rascal-mpl.org}\\[0pt]
+\noindent\url{http://tutor.rascal-mpl.org}\\[0pt]
+\bigskip
+
+\mysect{Context-free syntax}
+\begin{rascal}
+\CAT{Keyword}{start} \CAT{Keyword}{syntax} Form  = form: \CAT{Constant}{"form"} Id name \CAT{Constant}{"\{{}"} Question* questions \CAT{Constant}{"\}{}"};
+
+\CAT{Keyword}{syntax} Question
+  = question: Label label Id name \CAT{Constant}{":"} QType tipe
+  | computed: Label label Id name \CAT{Constant}{":"} QType tipe \CAT{Constant}{"="} Expr expr
+  | ifThen: \CAT{Constant}{"if"} \CAT{Constant}{"("} Expr cond \CAT{Constant}{")"} Question body () !\textgreater{}\textgreater{} \CAT{Constant}{"else"}
+  | ifThenElse: \CAT{Constant}{"if"} \CAT{Constant}{"("} Expr cond \CAT{Constant}{")"} Question body \CAT{Constant}{"else"} Question elseBody
+  | \CAT{Comment}{@Foldable} group: \CAT{Constant}{"\{{}"} Question* questions \CAT{Constant}{"\}{}"};
+
+\CAT{Keyword}{syntax} Expr
+  = var: Id name
+  | integer: Integer
+  | string: String
+  | money: Money
+  | \textbackslash{}true: \CAT{Constant}{"true"}
+  | \textbackslash{}false: \CAT{Constant}{"false"}
+  | \CAT{Keyword}{bracket} \CAT{Constant}{"("} Expr \CAT{Constant}{")"}
+  \textgreater{} not: \CAT{Constant}{"!"} Expr
+  \textgreater{} \CAT{Keyword}{left} (
+      mul: Expr \CAT{Constant}{"*"} Expr
+    | div: Expr \CAT{Constant}{"/"} Expr
+  )
+  \textgreater{} \CAT{Keyword}{left} (
+      add: Expr \CAT{Constant}{"+"} Expr
+    | sub: Expr \CAT{Constant}{"-"} Expr
+  )
+  \textgreater{} \CAT{Keyword}{non-assoc} (
+      lt: Expr \CAT{Constant}{"\textbackslash{}\textless{}"} Expr
+    | leq: Expr \CAT{Constant}{"\textbackslash{}\textless{}="} Expr
+    | gt: Expr \CAT{Constant}{"\textbackslash{}\textgreater{}"} Expr
+    | geq: Expr \CAT{Constant}{"\textbackslash{}\textgreater{}="} Expr
+    | eq: Expr \CAT{Constant}{"=="} Expr
+    | neq: Expr \CAT{Constant}{"!="} Expr
+  )
+  \textgreater{} \CAT{Keyword}{left} and: Expr \CAT{Constant}{"\&{}\&{}"} Expr
+  \textgreater{} \CAT{Keyword}{left} or: Expr \CAT{Constant}{"||"} Expr;
+  
+\CAT{Keyword}{lexical} Label = \CAT{Comment}{@category=\CAT{Constant}{"Constant"}} label: String; 
+  
+\CAT{Keyword}{syntax} QType
+  = boolean: \CAT{Constant}{"boolean"} 
+  | string: \CAT{Constant}{"string"}
+  | integer: \CAT{Constant}{"integer"}
+  | money: \CAT{Constant}{"money"};
+\end{rascal}
+
+\mysect{Lexical syntax}
+\begin{rascal}
+\CAT{Keyword}{lexical} String = {}[\CAT{Constant}{\textbackslash{}"}] StrChar* {}[\CAT{Constant}{\textbackslash{}"}];
+
+\CAT{Keyword}{lexical} StrChar = !{}[\CAT{Constant}{\textbackslash{}"}\CAT{Constant}{\textbackslash{}\textbackslash{}}] | {}[\CAT{Constant}{\textbackslash{}\textbackslash{}}]{}[\CAT{Constant}{\textbackslash{}\textbackslash{}}\CAT{Constant}{\textbackslash{}"}\CAT{Constant}{n}\CAT{Constant}{f}\CAT{Constant}{b}\CAT{Constant}{t}\CAT{Constant}{r}];
+
+\CAT{Keyword}{lexical} Integer =  {}[\CAT{Constant}{0}\CAT{Keyword}{-}\CAT{Constant}{9}]+ !\textgreater{}\textgreater{} {}[\CAT{Constant}{0}\CAT{Keyword}{-}\CAT{Constant}{9}];
+
+\CAT{Keyword}{lexical} Money =  {}[\CAT{Constant}{0}\CAT{Keyword}{-}\CAT{Constant}{9}]+ \CAT{Constant}{"."} {}[\CAT{Constant}{0}\CAT{Keyword}{-}\CAT{Constant}{9}]+ !\textgreater{}\textgreater{} {}[\CAT{Constant}{0}\CAT{Keyword}{-}\CAT{Constant}{9}];
+
+\CAT{Keyword}{layout} Standard = WhitespaceOrComment* !\textgreater{}\textgreater{} {}[\CAT{Constant}{\textbackslash{} }\CAT{Constant}{\textbackslash{}t}\CAT{Constant}{\textbackslash{}n}\CAT{Constant}{\textbackslash{}f}\CAT{Constant}{\textbackslash{}r}] !\textgreater{}\textgreater{} \CAT{Constant}{"//"};
+  
+\CAT{Keyword}{lexical} Comment = \CAT{Comment}{@category=\CAT{Constant}{"Comment"}} \CAT{Constant}{"//"} !{}[\CAT{Constant}{\textbackslash{}n}\CAT{Constant}{\textbackslash{}r}]* \${};
+
+\CAT{Keyword}{syntax} WhitespaceOrComment = whitespace: Whitespace | comment: Comment;   
+
+\CAT{Keyword}{lexical} Whitespace 
+  = {}[\CAT{Constant}{\textbackslash{}u0009}\CAT{Keyword}{-}\CAT{Constant}{\textbackslash{}u000D} \CAT{Constant}{\textbackslash{}u0020} \CAT{Constant}{\textbackslash{}u0085} \CAT{Constant}{\textbackslash{}u00A0} \CAT{Constant}{\textbackslash{}u1680} \CAT{Constant}{\textbackslash{}u180E} \CAT{Constant}{\textbackslash{}u2000}\CAT{Keyword}{-}\CAT{Constant}{\textbackslash{}u200A} \CAT{Constant}{\textbackslash{}u2028} \CAT{Constant}{\textbackslash{}u2029} \CAT{Constant}{\textbackslash{}u202F} \CAT{Constant}{\textbackslash{}u205F} \CAT{Constant}{\textbackslash{}u3000}]; 
+  
+\CAT{Keyword}{lexical} Id 
+  = id: ({}[\CAT{Constant}{a}\CAT{Keyword}{-}\CAT{Constant}{z} \CAT{Constant}{A}\CAT{Keyword}{-}\CAT{Constant}{Z} \CAT{Constant}{0}\CAT{Keyword}{-}\CAT{Constant}{9} \CAT{Constant}{\_{}}] !\textless{}\textless{} {}[\CAT{Constant}{a}\CAT{Keyword}{-}\CAT{Constant}{z} \CAT{Constant}{A}\CAT{Keyword}{-}\CAT{Constant}{Z}]{}[\CAT{Constant}{a}\CAT{Keyword}{-}\CAT{Constant}{z} \CAT{Constant}{A}\CAT{Keyword}{-}\CAT{Constant}{Z} \CAT{Constant}{0}\CAT{Keyword}{-}\CAT{Constant}{9} \CAT{Constant}{\_{}}]* !\textgreater{}\textgreater{} {}[\CAT{Constant}{a}\CAT{Keyword}{-}\CAT{Constant}{z} \CAT{Constant}{A}\CAT{Keyword}{-}\CAT{Constant}{Z} \CAT{Constant}{0}\CAT{Keyword}{-}\CAT{Constant}{9} \CAT{Constant}{\_{}}]) \textbackslash{} Keywords;  
+\end{rascal}
+%\end{multicols}
+
+\mysect{Abstract syntax}
+\begin{rascal}
+\CAT{Keyword}{data} Form
+  = form(\CAT{Keyword}{str} name, \CAT{Keyword}{list}{}[Question] body);
+  
+\CAT{Keyword}{data} Question
+  = question(Label label, Id name, QType tipe)
+  | computed(Label label, Id name, QType tipe, Expr expr)
+  | ifThen(Expr cond, Question body)
+  | ifThenElse(Expr cond, Question body, Question elseBody)
+  | group(\CAT{Keyword}{list}{}[Question] questions)
+  ;
+
+\CAT{Keyword}{data} Expr
+  = var(Id id)
+  | integer(\CAT{Keyword}{int} intValue)
+  | string(\CAT{Keyword}{str} strValue)
+  | money(\CAT{Keyword}{real} realValue)
+  | \textbackslash{}true()
+  | \textbackslash{}false()
+  | not(Expr arg)
+  | mul(Expr lhs, Expr rhs)
+  | div(Expr lhs, Expr rhs)
+  | add(Expr lhs, Expr rhs)
+  | sub(Expr lhs, Expr rhs)
+  | eq(Expr lhs, Expr rhs)
+  | neq(Expr lhs, Expr rhs)
+  | lt(Expr lhs, Expr rhs)
+  | gt(Expr lhs, Expr rhs)
+  | leq(Expr lhs, Expr rhs)
+  | geq(Expr lhs, Expr rhs)
+  | and(Expr lhs, Expr rhs)
+  | or(Expr lhs, Expr rhs)
+  ;
+  
+ 
+\CAT{Keyword}{data} QType
+ = boolean()
+ | integer()
+ | money()
+ | string()
+ ; 
+ 
+\CAT{Keyword}{data} Id = id(\CAT{Keyword}{str} name);
+\CAT{Keyword}{data} Label = label(\CAT{Keyword}{str} label); 
+
+\end{rascal}
+\end{document}
