@@ -89,10 +89,10 @@ Add conditional expression <code>x ? y : z</code>
 
 <table border="1" width="100%" bordercolor="lightgrey">
 <tr><td>
-<strong>(Warm up) </strong> Use visit to:
+<strong>Warm up</strong>
 <ol type="I">
-<li>print out all labels in a form</li>
-<li>count all questions (question/computed)</li>
+<li>use <code>visit</code> print out all labels in a form</li>
+<li>use <code>visit</code>count all questions (question/computed)</li>
 </ol>
 </td></tr>
 </table>
@@ -123,6 +123,7 @@ See examples of <code>visit</code> at:
 <strong>Optional</strong>
 <ol type="a">
 <li>add <code>unlessElse</code>, and desugar it to <code>ifThenElse</code>.</li>
+<li>write a transformation using <code>visit</code> to simplify algebraic  expressions (e.g.,  <code>1 * x</code>, <code>0 + x</code>, <code>true && x</code>, <code>false && x</code>, etc.).
 </ol>
 </td></tr>
 </table>
