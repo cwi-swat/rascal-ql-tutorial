@@ -10,8 +10,19 @@
 </table>
 
 ## Hack your DSL with Rascal: Exercises
+
+Tijs van der Storm, Pablo Inostroza Valdera, CWI
+
 ---
 ### Part I
+
+Before starting coding, make sure you have opened a Rascal console associated with the project `RascalQLTutorial` (right-click on any Rascal file in the project and select 'Start console'). Then, in the console, do:
+
+* `import exercises::ImportThis;`
+* `import exercises::Snippets;`
+* past statements from `exercises/Snippets.rsc` and see what happens.
+
+The exercises can be complete by directly editing `exercises/Part1.rsc` and `exercises/Part2.rsc`. 
 
 #### 0. FizzBuzz
 
@@ -135,7 +146,7 @@ See examples of <code>visit</code> at:
 <tr><td>
 <strong>Warm up</strong><br>
 <ol type="I">
-<li>use deep matching (using <code>/</code>) to find a variables in a form.</li>
+<li>use deep matching (using <code>/</code>) to find all variables (<code>Id</code>) in a form.</li>
 <li>use deep match to find all question with label value (within the quotes) equal to name; make sure there are such labels in your test code.</li>
 </ol>
 </td></tr>
@@ -154,14 +165,15 @@ A computed question is dependent on the questions it refers to in its expression
 <tr><td>
 <strong>Tips</strong>
 <ul>
-<li>
- have a look at <code>controlDeps</code>, defined in (<em>Dependencies.rsc</em>) for inspiration
-</li>
-<li>Examples of deep match:
+<li>examples of deep match:
 <ul>
 <li><code>freeVars</code> in <i>Compile.rsc</i></li>
 <li><code>typeEnv</code> in <i>Check.rsc</i></li>
 </ul>
+</li>
+<li>
+ have a look at <code>controlDeps</code>, defined in (<em>Dependencies.rsc</em>) for inspiration
+</li>
 <li>use the function <code>visualize(Deps)</code> (<em>Visualize.rsc</em>) to visualize the result of your
   data dependency graph. Click on nodes to see the location they
   correspond to. 
