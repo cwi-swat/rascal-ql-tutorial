@@ -9,17 +9,16 @@
 </tr>
 </table>
 ## Hack your DSL with Rascal
-### Introduction to the Rascal IDE
----
-### Setting up Rascal
+### Installation preparations!!!
+
 1.	Download the Java JDK 7, available at:<http://www.oracle.com/technetwork/es/java/javasebusiness/downloads/index.html>2.	Download standard Eclipse Kepler available at: <http://www.eclipse.org/downloads/> 3.	Follow these steps to install the plugin into Eclipse:
 	1. Start Eclipse.	2. Select *Help → Install New Software*.	3. Make sure that the tick for *Contact all update sites during install to find required software* is enabled.	4. Type: <http://update.rascal-mpl.org/unstable/> in the *Work with* edit box.	5. Select the feature *Rascal*.	6. Select *Next* (several times) and accept the software license. The process may take a few minutes!	7. Once these features have been installed, restart Eclipse.
 4. The Rascal perspective should be displayed. If not, go to* Window → Open Perspective → Other...* and select **Rascal**.
 
-### Setting up the Questionnaire projectWe provide the Questionnaire project in a Git repository. It is possible to directly import it from Eclipse, or using your favorite Git client.#### Using Git from Eclipse1.	Select *File → Import…*2.	At the Import dialog, select *Git→ Projects from Git* and select *Next*.4.	At the *Select Repository Source* dialog, select *URI*, and then press *Next*.
+### Setting up the Questionnaire projectWe provide the Questionnaire project in a Git repository. It is possible to directly import it from Eclipse, or using your favorite Git client. We'll have USB sticks at the workshop if you just want to copy the project.#### Using Git from Eclipse1.	Select *File → Import…*2.	At the Import dialog, select *Git→ Projects from Git* and select *Next*.4.	At the *Select Repository Source* dialog, select *URI*, and then press *Next*.
 5.	At the *Source Git Repository dialog*, type <https://github.com/cwi-swat/rascal-ql-tutorial-prototype.git> in the URI text box, and then click on the *Finish* button (if the button *Finish* is not enabled, press *Next* several times until you reach the end of the wizard).
 6.	The project **RascalQLTutorial** should be now in your workspace.#### Using Git with the command line or another GIT client1.	Clone the repository at <https://github.com/cwi-swat/rascal-ql-tutorial-prototype.git>2.	Select *File → Import…*3.	At the Import dialog, select *General → Existing Projects into Workspace*, and then press *Next*,4.	Being checked the *Select root directory* radio button, click on the *Browse* button next to it.5.	Browse your file system to search the root folder of the project you just cloned.
-6.	Click on the *Finish* button.7.	The project **RascalQLTutorial** should be now in your workspace.### Rascal IDE OverviewThis is a snapshot of the **Rascal IDE**:
+6.	Click on the *Finish* button.7.	The project **RascalQLTutorial** should be now in your workspace._NB: Restart Eclipse after importing the project. After that, the demo language will be enabled in the IDE._### Rascal IDE OverviewThis is a snapshot of the **Rascal IDE**:
 <div align="left"><img src="https://raw.githubusercontent.com/cwi-swat/rascal-ql-tutorial/master/Handouts/images/rascal-ide.png" width="90%"
 </span>
 
