@@ -1,0 +1,598 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<style>
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA09pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoMTMuMCAyMDEyMDMwNS5tLjQxNSAyMDEyLzAzLzA1OjIxOjAwOjAwKSAgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OUM2NjlDQjI4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OUM2NjlDQjM4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5QzY2OUNCMDg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5QzY2OUNCMTg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PsQhXeAAAABfSURBVHjaYvz//z8DJYCRUgMYQAbAMBQIAvEqkBQWXI6sHqwHiwG70TTBxGaiWwjCTGgOUgJiF1J8wMRAIUA34B4Q76HUBelAfJYSA0CuMIEaRP8wGIkGMA54bgQIMACAmkXJi0hKJQAAAABJRU5ErkJggg==) no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OENDRjNBN0E2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OENDRjNBN0I2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4Q0NGM0E3ODY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4Q0NGM0E3OTY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqqezsUAAAAfSURBVHjaYmRABcYwBiM2QSA4y4hNEKYDQxAEAAIMAHNGAzhkPOlYAAAAAElFTkSuQmCC) repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0;
+}
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+li {
+  margin: 0; }
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  padding: 0;border-collapse: collapse; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:0 auto;
+    }
+}
+</style>
+<title>Hack your DSL with Rascal: Exercises</title>
+
+</head>
+<body>
+<table width="100%">
+<tr>
+<td>
+<img src="https://rosettacode.org/mw/images/thumb/c/cd/RascalLogo.png/200px-RascalLogo.png" height="60px"/>
+</td>
+<td align="right">
+<img src="https://www.cwi.nl/logo.png" height="60px"/>
+</td>
+</tr>
+</table>
+
+
+<h2>Hack your DSL with Rascal: Exercises</h2>
+
+<p>Tijs van der Storm, Pablo Inostroza Valdera, CWI</p>
+
+<hr />
+
+<h3>Part I</h3>
+
+<p>Before starting coding, make sure you have opened a Rascal console associated with the project <code>RascalQLTutorial</code> (right-click on any Rascal file in the project and select 'Start console'). Then, in the console, do:</p>
+
+<ul>
+<li><code>import exercises::ImportThis;</code></li>
+<li><code>import exercises::Snippets;</code></li>
+<li>past statements from <em>exercises/Snippets.rsc</em> and see what happens.</li>
+</ul>
+
+
+<p>The exercises can be complete by directly editing <em>exercises/Part1.rsc</em> and <em>exercises/Part2.rsc</em>.</p>
+
+<h4>0. FizzBuzz</h4>
+
+<p>(See <a href="http://c2.com/cgi/wiki?FizzBuzzTest">http://c2.com/cgi/wiki?FizzBuzzTest</a>)</p>
+
+<p>Write a program that prints the numbers from 1 to 100. But for multiples of three print “Fizz” instead of the number and for the multiples of five print “Buzz”. For numbers which are multiples of both three and five print "FizzBuzz".</p>
+
+<table border="1" width="100%" bordercolor="lightgrey">
+<tr><td>
+<strong>Tips</strong>
+<ul>
+<li>[1..101] gives the list [1,2,3,...,100]</li>
+<li>use <code>println</code> to print.</li>
+</ul>
+</td></tr>
+</table>
+
+
+<h4>1. Adding <em>unless</em></h4>
+
+<p>Add an unless statement which is to be used similar to <code>ifThen</code> statements:</p>
+
+<pre><code>unless (x &gt; 1) { "What is your age?" age: int }
+</code></pre>
+
+<ul>
+<li>add a production to <strong>Question</strong> in <em>QL.rsc</em></li>
+<li>add a constructor to <strong>Question</strong> in <em>AST.rsc</em></li>
+<li>add a tc rule to the type checker in <em>Check.rsc</em></li>
+<li>add a normalize rule to the normalize in <em>Normalize.rsc</em> (NB: the semantics of  <code>unless(e, s)</code> is equivalent to <code>if(not(e), s)</code>)</li>
+</ul>
+
+
+<p>Check in the IDE that the type checker indeed signals errors in unless conditions and bodies, and that its conditions appear in the outliner.</p>
+
+<table border="1" width="100%" bordercolor="lightgrey" >
+<tr><td>
+<strong>Tip</strong>
+<ul>
+<li>implement <code>unless</code> analogous to <code>ifThen</code> in all cases</li>
+</ul>
+</td></tr>
+</table>
+
+
+<p><span></span></p>
+
+<table border="1" width="100%" bordercolor="lightgrey">
+<tr><td>
+<strong>Optional Exercises</strong>
+<ol type="a">
+<li>change the typechecker so that a warning is issued in the case of <code>ifThen(not(_), ...)</code>.</li>
+<li>fix the outliner (<i>Outline.rsc</i>) so that <code>unless</code> conditions appears in the outline.</li>
+<li>fix the formatter (<i>Format.rsc</i>)to pretty print <code>unless</code>.</li>
+</ol>
+</td></tr>
+</table>
+
+
+<h4>2. Date valued questions</h4>
+
+<p>Add support for date valued questions:</p>
+
+<ul>
+<li>add syntax to <strong>QType</strong> to allow date fields (<em>Lexical.rsc</em>)</li>
+<li>add new <strong>QType</strong> constructor for date types (<em>AST.rsc</em>)</li>
+<li>add new case to <strong>type2widget</strong> in <em>Compile.rsc</em> to generate DateValueWidgets (see <em>resources/js/framework/value-widgets.js</em>)</li>
+</ul>
+
+
+<h4>3. Conditional expressions</h4>
+
+<p>Add conditional expression <code>x ? y : z</code></p>
+
+<ul>
+<li>add production to Expr (<em>QL.rsc</em>)
+
+<ul>
+<li>Make sure it's low in the priority hierarchy i.e. <code>x &amp;&amp; y ? a : b</code>  should be parsed as <code>(x &amp;&amp; y) ? a : b</code>.</li>
+</ul>
+</li>
+<li>add new <code>Expr</code> constructor in <em>AST.rsc</em></li>
+<li>add new case to <code>typeOf</code> in <em>TypeOf.rsc</em></li>
+<li>add new case to <code>tc</code> in <em>CheckExpr.rsc</em></li>
+<li>add new case to <code>expr2js</code> in <em>Expr2JS.rsc</em></li>
+</ul>
+
+
+<h3>Part II</h3>
+
+<h4>4. Explicit desugaring of <em>unless</em> to <em>ifThen</em> using <code>visit</code></h4>
+
+<table border="1" width="100%" bordercolor="lightgrey">
+<tr><td>
+<strong>Warm up</strong>
+<ol type="I">
+<li>use <code>visit</code> print out all labels in a form</li>
+<li>use <code>visit</code>count all questions (question/computed)</li>
+</ol>
+</td></tr>
+</table>
+
+
+<p>Explicit desugaring of <code>unless</code>:</p>
+
+<ul>
+<li>use <code>visit</code> to traverse and rewrite the Form</li>
+<li>use pattern matching to match on unless nodes.</li>
+<li>rewrite unless nodes to <code>ifThen</code> using <code>=&gt;</code></li>
+</ul>
+
+
+<p>The desugar function is called before compilation so the compiler (<em>Compile.rsc</em>) does not have to be changed to support <code>unless</code>, even if no <code>normalize()</code> was used.</p>
+
+<table border="1" width="100%" bordercolor="lightgrey" >
+<tr><td><strong>Tip</strong><br/>
+<ul>
+<li>See examples of <code>visit</code> in <i>Resolve.rsc</i> and <i>Outline.rsc</i>
+</li>
+</ul>
+</td></tr>
+</table>
+
+
+<p><span></span></p>
+
+<table border="1" width="100%" bordercolor="lightgrey">
+<tr><td>
+<strong>Optional</strong>
+<ol type="a">
+<li>add <code>unlessElse</code>, and desugar it to <code>ifThenElse</code>.</li>
+<li>write a transformation using <code>visit</code> to simplify algebraic  expressions (e.g.,  <code>1 * x</code>, <code>0 + x</code>, <code>true && x</code>, <code>false && x</code>, etc.).
+</ol>
+</td></tr>
+</table>
+
+
+<h4>5. Extract data dependencies</h4>
+
+<table border="1" width="100%" bordercolor="lightgrey">
+<tr><td>
+<strong>Warm up</strong><br>
+<ol type="I">
+<li>use deep matching (using <code>/</code>) to find all variables (<code>Id</code>) in a form.</li>
+<li>use deep match to find all question with label value (within the quotes) equal to name; make sure there are such labels in your test code.</li>
+</ol>
+</td></tr>
+</table>
+
+
+<p>A computed question is dependent on the questions it refers to in its expression. Such dependencies can be represented as a binary relation (a set of tuples). The goal of this exercise is to extract such a relation.</p>
+
+<ul>
+<li>use the <code>Node</code> and <code>Deps</code> types and <code>nodeFor</code> function shown in (<em>Dependencies.rsc</em>)</li>
+<li>visit the form, and when encountering a computed question
+record edges to the <code>Deps</code> graph to record a data dependency.</li>
+<li>use deep match (<code>/</code>) to find <code>Id</code>s in expressions</li>
+</ul>
+
+
+<table border="1" width="100%" bordercolor="lightgrey">
+<tr><td>
+<strong>Tips</strong>
+<ul>
+<li>check out examples of deep match in <i>Compile.rsc</i>
+and <i>Check.rsc</i></li>
+</li>
+<li>
+ have a look at <code>controlDeps</code>, defined in (<em>Dependencies.rsc</em>) for inspiration
+</li>
+<li>use the function <code>visualize(Deps)</code> (<em>Visualize.rsc</em>) to visualize the result of your
+  data dependency graph. Click on nodes to see the location they
+  correspond to. 
+</li>
+</td></tr>
+</table>
+
+
+<h3>Part III</h3>
+
+<h4>6. Implement a Rename refactoring.</h4>
+
+<p>In this exercise we will employ concrete syntax matching and transformation to define a rename refactoring for QL. It's important for refactorings to preserve as much existing layout as possible. Hence, refactorings typically cannot be implemented in terms of abstract syntax, because it would require pretty printing the transformed code.</p>
+
+<p>Implementing a rename refactoring proceeds in two phases:</p>
+
+<ul>
+<li><p>Compute all occurrences corresponding to a certain name; that is, its definition and all the references to it.</p></li>
+<li><p>Syntactically transform the program so that all occurrences corresponding to a name are consistently renamed.</p></li>
+</ul>
+
+
+<table border="1" width="100%" bordercolor="lightgrey">
+<tr><td>
+<strong>Optional</strong>
+<ol type="a">
+<li>Think about name consistency preconditions before you can apply a rename refactoring safely</li>
+<li>Extend the refactoring invocation in <code>Plugin.rsc</code> so that an error message is shown if the precondition does not hold.
+</ol>
+</td></tr>
+</table>
+
+
+<h4>7. Check for use before define of questions</h4>
+
+<p>Although QL allows the use of a question in some expression before it actually appears in the form, one could say that this represents a kind of code smell. In this exercise you will define an analysis that checks for this smell.</p>
+
+<ul>
+<li>use the resolved relation of Exercise 5 to find the
+  the order required by the dependencies (use the order()
+  function analysis::graphs::Graph to compute topological order).</li>
+<li>determine textual ordering by comparing the .offset field of locs</li>
+</ul>
+
+
+<table border="1" width="100%" bordercolor="lightgrey">
+<tr><td>
+<strong>Tips</strong>
+<ul>
+<li>check out examples of deep match in <i>Compile.rsc</i>
+and <i>Check.rsc</i></li>
+</li>
+<li>
+Use the resolved relation of Exercise 5 to find the
+    the order required by the dependencies (use the <code>order()</code>
+    function <code>analysis::graphs::Graph</code> to compute topological order). 
+</li>
+<li>Determine textual ordering by comparing the <code>.offset</code> field of source locations.
+</li>
+</td></tr>
+</table>
+
+
+
+
+<table border="1" width="100%" bordercolor="lightgrey">
+<tr><td>
+<strong>Optional</strong>
+<ol type="a">
+<li>Hook up the analysis to the type checker so that warnings are shown in the editor when a question is used before it's defined.
+</ol>
+</td></tr>
+</table>
+
+
+<h4>8. Reorder questions to eliminate used-before-define questions</h4>
+
+<p>Whereas Exercise 6 was concerned with identifying a code smell, in this exercise you will write a refactoring to eliminate the smell, namely by reordering questions so that no use-before-define questions are present.</p>
+
+<p>This is best illustrated using an example:</p>
+
+<pre><code>"q1" q1: int = 2 * q2
+"q2" q2: int
+</code></pre>
+
+<p>Should be transformed to:</p>
+
+<pre><code>"q2" q2: int
+"q1" q1: int = 2 * q2
+</code></pre>
+
+<table border="1" width="100%" bordercolor="lightgrey">
+<tr><td>
+<strong>Optional</strong>
+<ol type="a">
+<li>Think about how to eliminate the code smell with as little change as possible, and implement that.
+</ol>
+</td></tr>
+</table>
+
+
+
+</body>
+</html>
