@@ -1,10 +1,10 @@
 <table width="100%">
 <tr>
 <td>
-<img src="http://homepages.cwi.nl/~hills/images/logo.png" height="60px"/>
+<img src="https://rosettacode.org/mw/images/thumb/c/cd/RascalLogo.png/200px-RascalLogo.png" height="60px"/>
 </td>
 <td align="right">
-<img src="http://homepages.cwi.nl/~pietrzak/img/1b_CWI_LogoPMS193.png" height="60px"/>
+<img src="https://www.cwi.nl/logo.png" height="60px"/>
 </td>
 </tr>
 </table>
