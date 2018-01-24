@@ -176,3 +176,91 @@ and <i>Check.rsc</i></li>
 </td></tr>
 </table>
 
+### Part III
+
+#### 6. Implement a Rename refactoring.
+In this exercise we will employ concrete syntax matching and transformation to define a rename refactoring for QL. It's important for refactorings to preserve as much existing layout as possible. Hence, refactorings typically cannot be implemented in terms of abstract syntax, because it would require pretty printing the transformed code. 
+Implementing a rename refactoring proceeds in two phases:
+- Compute all occurrences corresponding to a certain name; that is, its definition and all the references to it.
+- Syntactically transform the program so that all occurrences corresponding to a name are consistently renamed.
+<table border="1" width="100%" bordercolor="lightgrey">
+<tr><td>
+<strong>Optional</strong>
+<ol type="a">
+<li>Think about name consistency preconditions before you can apply a rename refactoring safely</li>
+<li>Extend the refactoring invocation in <code>Plugin.rsc</code> so that an error message is shown if the precondition does not hold.
+</ol>
+</td></tr>
+</table>
+
+#### 7. Check for use before define of questions
+
+Although QL allows the use of a question in some expression before it actually appears in the form, one could say that this represents a kind of code smell. In this exercise you will define an analysis that checks for this smell. 
+
+- use the resolved relation of Exercise 5 to find the
+    the order required by the dependencies (use the order()
+    function analysis::graphs::Graph to compute topological order). 
+ - determine textual ordering by comparing the .offset field of locs
+ 
+<table border="1" width="100%" bordercolor="lightgrey">
+<tr><td>
+<strong>Tips</strong>
+<ul>
+<li>check out examples of deep match in <i>Compile.rsc</i>
+and <i>Check.rsc</i></li>
+</li>
+<li>
+Use the resolved relation of Exercise 5 to find the
+    the order required by the dependencies (use the <code>order()</code>
+    function <code>analysis::graphs::Graph</code> to compute topological order). 
+</li>
+<li>Determine textual ordering by comparing the <code>.offset</code> field of source locations.
+</li>
+</td></tr>
+</table>
+
+ 
+
+<table border="1" width="100%" bordercolor="lightgrey">
+<tr><td>
+<strong>Optional</strong>
+<ol type="a">
+<li>Hook up the analysis to the type checker so that warnings are shown in the editor when a question is used before it's defined.
+</ol>
+</td></tr>
+</table>
+
+#### 8. Reorder questions to eliminate used-before-define questions
+
+Whereas Exercise 6 was concerned with identifying a code smell, in this exercise you will write a refactoring to eliminate the smell, namely by reordering questions so that no use-before-define questions are present.
+
+This is best illustrated using an example:
+
+```
+"q1" q1: int = 2 * q2
+"q2" q2: int
+```
+
+Should be transformed to:
+
+```
+"q2" q2: int
+"q1" q1: int = 2 * q2
+```
+
+
+<table border="1" width="100%" bordercolor="lightgrey">
+<tr><td>
+<strong>Optional</strong>
+<ol type="a">
+<li>Think about how to eliminate the code smell with as little change as possible, and implement that.
+</ol>
+</td></tr>
+</table>
+
+
+
+
+
+
+
