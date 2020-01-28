@@ -50,7 +50,7 @@ Add an unless statement which is to be used similar to `ifThen` statements:
  *  add a production to **Question** in *QL.rsc*
  *  add a constructor to **Question** in *AST.rsc*
  *  add a tc rule to the type checker in *Check.rsc*
- *  add a normalize rule to the normalize in *Normalize.rsc* (NB: the semantics of  `unless(e, s)` is equivalent to `if(not(e), s)`)
+ *  add a normalize rule to the normalize in *Normalize.rsc* (NB: the semantics of  `unless(e, s)` is equivalent to `ifThen(not(e), s)`)
  
 Check in the IDE that the type checker indeed signals errors in unless conditions and bodies, and that its conditions appear in the outliner.  
 
